@@ -39,6 +39,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -81,9 +82,7 @@ fun GreetingPreview() {
 }
 
 @Composable
-fun TampilLayout(
-    modifier: Modifier = Modifier
-){
+fun TampilLayout(modifier: Modifier = Modifier){
     Card(
         modifier = modifier,
         elevation = CardDefaults.cardElevation(defaultElevation = 5.dp)
@@ -103,6 +102,7 @@ fun TampilLayout(
 fun TampilForm(cobaViewModel: CobaViewModel = viewModel()){
     var textNama by remember { mutableStateOf("")}
     var textTlp by remember { mutableStateOf("")}
+    var txtemail by remember { mutableStateOf("")}
     var textalamat by remember { mutableStateOf("")}
 
     val context = LocalContext.current
@@ -136,18 +136,27 @@ fun TampilForm(cobaViewModel: CobaViewModel = viewModel()){
         singleLine = true,
         shape = MaterialTheme.shapes.large,
         modifier = Modifier.fillMaxWidth(),
-        label = { Text(text = "Alamat")},
+        label = { Text(text = "Email")},
         onValueChange = {
             textalamat = it
         } )
     SelectJK(
         options = jenis.map{id -> context.resources.getString(id)},
         onSelectionChanged = {cobaViewModel.setJenisK(it)})
+    OutlinedTextField(
+        value = textalamat,
+        singleLine = true,
+        shape = MaterialTheme.shapes.large,
+        modifier = Modifier.fillMaxWidth(),
+        label = { Text(text = "Alamat")},
+        onValueChange = {
+            textalamat = it
+        } )
     Button(
         modifier = Modifier
             .fillMaxWidth(),
         onClick = {
-            cobaViewModel.insertData(textNama, textTlp, textalamat, dataForm.sex)
+            cobaViewModel.insertData(textNama, textTlp, txtemail, textalamat, dataForm.sex)
         },
         colors = ButtonDefaults.buttonColors(containerColor = Color.Black, contentColor = Color.White)
     ) {
@@ -160,12 +169,13 @@ fun TampilForm(cobaViewModel: CobaViewModel = viewModel()){
     TextHasil(
         namanya = cobaViewModel.namaUsr,
         telponnya = cobaViewModel.noTlp,
+        emailnya = cobaViewModel.emailUsr,
         alamatnya = cobaViewModel.alamat,
         jenisnya = cobaViewModel.jenisKL)
 }
 
 @Composable
-fun TextHasil(namanya: String, telponnya: String, alamatnya: String, jenisnya: String){
+fun TextHasil(namanya: String, telponnya: String, emailnya: String, alamatnya: String, jenisnya: String){
     ElevatedCard(
         elevation = CardDefaults.cardElevation(
             defaultElevation = 6.dp
@@ -205,7 +215,10 @@ fun SelectJK(
 {
     var selectedValue by rememberSaveable { mutableStateOf("")}
 
-    Column(modifier = Modifier.padding(16.dp)) {
+    Column{
+        Text(text = "Jenis Kelamin", textAlign = TextAlign.Start)
+    }
+    Row(modifier = Modifier.padding(16.dp)) {
         options.forEach{ item ->
             Row (
                 modifier = Modifier.selectable(
