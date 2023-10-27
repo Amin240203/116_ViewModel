@@ -133,13 +133,13 @@ fun TampilForm(cobaViewModel: CobaViewModel = viewModel()){
         }
     )
     OutlinedTextField(
-        value = textalamat,
+        value = txtemail,
         singleLine = true,
         shape = MaterialTheme.shapes.large,
         modifier = Modifier.fillMaxWidth(),
         label = { Text(text = "Email")},
         onValueChange = {
-            textalamat = it
+            txtemail= it
         } )
     SelectJK(
         options = jenis.map{id -> context.resources.getString(id)},
@@ -160,7 +160,7 @@ fun TampilForm(cobaViewModel: CobaViewModel = viewModel()){
         modifier = Modifier
             .fillMaxWidth(),
         onClick = {
-            cobaViewModel.insertData(textNama, textTlp, txtemail, textalamat, dataForm.sex)
+            cobaViewModel.insertData(dataForm.sex, dataForm.status, textalamat, txtemail)
         },
         colors = ButtonDefaults.buttonColors(containerColor = Color.Black, contentColor = Color.White)
     ) {
@@ -169,7 +169,7 @@ fun TampilForm(cobaViewModel: CobaViewModel = viewModel()){
             fontSize = 16.sp
         )
     }
-    Spacer(modifier = Modifier.height(40.dp))
+    Spacer(modifier = Modifier.height(20.dp))
     TextHasil(
         namanya = cobaViewModel.namaUsr,
         telponnya = cobaViewModel.noTlp,
@@ -194,7 +194,7 @@ fun TextHasil(namanya: String, telponnya: String, emailnya: String, statusnya: S
                 .padding(horizontal = 10.dp, vertical = 4.dp)
         )
         Text(
-            text = "Status : " + telponnya,
+            text = "Status : " + statusnya,
             modifier = Modifier
                 .padding(horizontal = 10.dp, vertical = 5.dp)
         )
@@ -221,8 +221,8 @@ fun SelectJK(
     var selectedValue by rememberSaveable { mutableStateOf("")}
 
     Column{
-        Text(text = "Jenis Kelamin", textAlign = TextAlign.Start)
-    }
+        Text(text = "Jenis Kelamin")
+
     Row(modifier = Modifier.padding(16.dp)) {
         options.forEach{ item ->
             Row (
@@ -243,9 +243,9 @@ fun SelectJK(
                     }
                 )
                 Text(item)
+                }
             }
         }
-
     }
 
 }
@@ -257,32 +257,32 @@ fun SelectST(
 {
     var selectedValue by rememberSaveable { mutableStateOf("")}
 
-    Column{
-        Text(text = "Status", textAlign = TextAlign.Start)
-    }
-    Row(modifier = Modifier.padding(16.dp)) {
-        options.forEach{ item ->
-            Row (
-                modifier = Modifier.selectable(
-                    selected = selectedValue == item,
-                    onClick = {
-                        selectedValue = item
-                        onSelectionChanged(item)
-                    }
-                ),
-                verticalAlignment = Alignment.CenterVertically
-            ){
-                RadioButton(
-                    selected = selectedValue == item,
-                    onClick = {
-                        selectedValue = item
-                        onSelectionChanged(item)
-                    }
-                )
-                Text(item)
+    Column {
+        Text(text = "Status")
+        Row(modifier = Modifier.padding(16.dp)) {
+            options.forEach { item ->
+                Row(
+                    modifier = Modifier.selectable(
+                        selected = selectedValue == item,
+                        onClick = {
+                            selectedValue = item
+                            onSelectionChanged(item)
+                        }
+                    ),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    RadioButton(
+                        selected = selectedValue == item,
+                        onClick = {
+                            selectedValue = item
+                            onSelectionChanged(item)
+                        }
+                    )
+                    Text(item)
+                }
             }
-        }
 
+        }
     }
 
 }
