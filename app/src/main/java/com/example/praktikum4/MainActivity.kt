@@ -169,17 +169,18 @@ fun TampilForm(cobaViewModel: CobaViewModel = viewModel()){
             fontSize = 16.sp
         )
     }
-    Spacer(modifier = Modifier.height(80.dp))
+    Spacer(modifier = Modifier.height(40.dp))
     TextHasil(
         namanya = cobaViewModel.namaUsr,
         telponnya = cobaViewModel.noTlp,
         emailnya = cobaViewModel.emailUsr,
         alamatnya = cobaViewModel.alamat,
+        statusnya = cobaViewModel.status,
         jenisnya = cobaViewModel.jenisKL)
 }
 
 @Composable
-fun TextHasil(namanya: String, telponnya: String, emailnya: String, alamatnya: String, jenisnya: String){
+fun TextHasil(namanya: String, telponnya: String, emailnya: String, statusnya: String, alamatnya: String, jenisnya: String){
     ElevatedCard(
         elevation = CardDefaults.cardElevation(
             defaultElevation = 6.dp
@@ -188,12 +189,12 @@ fun TextHasil(namanya: String, telponnya: String, emailnya: String, alamatnya: S
             .fillMaxWidth()
     ) {
         Text(
-            text = "Nama : " + namanya,
+            text = "Jenis Kelamin : " + jenisnya,
             modifier = Modifier
                 .padding(horizontal = 10.dp, vertical = 4.dp)
         )
         Text(
-            text = "Telepon : " + telponnya,
+            text = "Status : " + telponnya,
             modifier = Modifier
                 .padding(horizontal = 10.dp, vertical = 5.dp)
         )
@@ -203,7 +204,7 @@ fun TextHasil(namanya: String, telponnya: String, emailnya: String, alamatnya: S
                 .padding(horizontal = 10.dp, vertical = 4.dp)
         )
         Text(
-            text = "Jenis Kelamin : " + jenisnya,
+            text = "Email : " + emailnya,
             modifier =  Modifier
                 .padding(horizontal = 10.dp, vertical = 5.dp)
         )
