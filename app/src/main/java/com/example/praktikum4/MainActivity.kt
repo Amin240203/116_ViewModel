@@ -45,6 +45,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.praktikum4.Data.DataSource.jenis
+import com.example.praktikum4.Data.DataSource.status
 import com.example.praktikum4.Data.Dataform
 import com.example.praktikum4.ui.theme.Praktikum4Theme
 
@@ -109,7 +110,7 @@ fun TampilForm(cobaViewModel: CobaViewModel = viewModel()){
     val dataForm: Dataform
     val uiState by cobaViewModel.uiState.collectAsState()
     dataForm = uiState
-
+    Text(text = "Create Your Account")
     OutlinedTextField(
         value = textNama,
         singleLine = true,
@@ -143,6 +144,9 @@ fun TampilForm(cobaViewModel: CobaViewModel = viewModel()){
     SelectJK(
         options = jenis.map{id -> context.resources.getString(id)},
         onSelectionChanged = {cobaViewModel.setJenisK(it)})
+    SelectST(
+        options = status.map{id -> context.resources.getString(id)},
+        onSelectionChanged = {cobaViewModel.setStatus(it)})
     OutlinedTextField(
         value = textalamat,
         singleLine = true,
@@ -165,7 +169,7 @@ fun TampilForm(cobaViewModel: CobaViewModel = viewModel()){
             fontSize = 16.sp
         )
     }
-    Spacer(modifier = Modifier.height(100.dp))
+    Spacer(modifier = Modifier.height(80.dp))
     TextHasil(
         namanya = cobaViewModel.namaUsr,
         telponnya = cobaViewModel.noTlp,
@@ -217,6 +221,43 @@ fun SelectJK(
 
     Column{
         Text(text = "Jenis Kelamin", textAlign = TextAlign.Start)
+    }
+    Row(modifier = Modifier.padding(16.dp)) {
+        options.forEach{ item ->
+            Row (
+                modifier = Modifier.selectable(
+                    selected = selectedValue == item,
+                    onClick = {
+                        selectedValue = item
+                        onSelectionChanged(item)
+                    }
+                ),
+                verticalAlignment = Alignment.CenterVertically
+            ){
+                RadioButton(
+                    selected = selectedValue == item,
+                    onClick = {
+                        selectedValue = item
+                        onSelectionChanged(item)
+                    }
+                )
+                Text(item)
+            }
+        }
+
+    }
+
+}
+@Composable
+fun SelectST(
+    options: List<String>,
+    onSelectionChanged: (String) -> Unit = {}
+)
+{
+    var selectedValue by rememberSaveable { mutableStateOf("")}
+
+    Column{
+        Text(text = "Status", textAlign = TextAlign.Start)
     }
     Row(modifier = Modifier.padding(16.dp)) {
         options.forEach{ item ->

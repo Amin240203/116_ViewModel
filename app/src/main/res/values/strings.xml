@@ -4,5 +4,7 @@
     <string name="wanita">Perempuan</string>
     <string name="wanita2">Cewe</string>
     <string name="laki2">Cowo</string>
-    <string name="submit">Submit</string>
+    <string name="menikah">Menikah</string>
+    <string name="belum">Belum Menikah</string>
+    <string name="submit">Register</string>
 </resources>
