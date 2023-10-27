@@ -175,7 +175,7 @@ fun TampilForm(cobaViewModel: CobaViewModel = viewModel()){
         telponnya = cobaViewModel.noTlp,
         emailnya = cobaViewModel.emailUsr,
         alamatnya = cobaViewModel.alamat,
-        statusnya = cobaViewModel.status,
+        statusnya = cobaViewModel.statusM,
         jenisnya = cobaViewModel.jenisKL)
 }
 

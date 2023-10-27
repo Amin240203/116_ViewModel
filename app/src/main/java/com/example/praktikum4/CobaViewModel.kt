@@ -21,7 +21,7 @@ class CobaViewModel : ViewModel() {
         private  set
     var jenisKL: String by mutableStateOf("")
         private set
-    var status: String by mutableStateOf("")
+    var statusM: String by mutableStateOf("")
         private set
     private val _uiState = MutableStateFlow(Dataform())
     val uiState: StateFlow<Dataform> = _uiState.asStateFlow()
